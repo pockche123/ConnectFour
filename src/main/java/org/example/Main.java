@@ -34,7 +34,13 @@ public class Main {
 
         printGrid(grid);
 
-        System.out.println(checkWin(grid, "X", new int[]{1,1}));
+        System.out.println(checkWin(grid, "X", new int[]{1,4}));
+
+        clearColumn(2,grid);
+        printGrid(grid);
+
+        System.out.println(checkWin(grid, "X", new int[]{1,4}));
+
     }
 
     public static void setUpGrid(String[][] grid){
@@ -136,9 +142,9 @@ public class Main {
 
     }
 
-    public void clearColumn(int column, String[][] grid){
+    public static void clearColumn(int column, String[][] grid){
 
-        for(int r=0; r<grid.length; r++){
+        for(int r=1; r<grid.length; r++){
             grid[r][column-1] = "-";
         }
     }

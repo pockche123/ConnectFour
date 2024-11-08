@@ -1,5 +1,8 @@
 package org.example;
 
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -12,34 +15,54 @@ public class Main {
         setUpGrid(grid);
         printGrid(grid);
 
-        pickColumn(1,grid,"X");
-        printGrid(grid);
-        pickColumn(2,grid,"X");
-        printGrid(grid);
-        pickColumn(3,grid,"X");
-        printGrid(grid);
-        pickColumn(4,grid,"X");
-        printGrid(grid);
-        pickColumn(5,grid,"X");
-        printGrid(grid);
-        pickColumn(6,grid,"X");
-        printGrid(grid);
-        pickColumn(7,grid,"X");
-        printGrid(grid);
-        // Create a diagonal line of 'X's from (1,1) to (4,4)
-        grid[4][1] = "X";
-        grid[3][2] = "X";
-        grid[2][3] = "X";
-        grid[1][4] = "X";
-
+        System.out.println(grid[5][3]);
+        for(int r=1; r<grid.length; r++){
+            grid[r][2] = "X";
+            grid[r][4] = "X";
+        }
+        grid[2][2] = "O";
+        grid[2][4] = "O";
         printGrid(grid);
 
-        System.out.println(checkWin(grid, "X", new int[]{1,4}));
+        timeBombExplode(new int[]{3,3},grid);
 
-        clearColumn(2,grid);
-        printGrid(grid);
 
-        System.out.println(checkWin(grid, "X", new int[]{1,4}));
+
+       printGrid(grid);
+       checkForFloatingDiscs(grid,new int[]{3,3});
+
+       printGrid(grid);
+
+//        pickColumn(1,grid,"X");
+//        printGrid(grid);
+//        pickColumn(2,grid,"X");
+//        printGrid(grid);
+//        pickColumn(3,grid,"X");
+//        printGrid(grid);
+//        pickColumn(4,grid,"X");
+//        printGrid(grid);
+//        pickColumn(5,grid,"X");
+//        printGrid(grid);
+//        pickColumn(6,grid,"X");
+//        printGrid(grid);
+//        pickColumn(7,grid,"X");
+//        printGrid(grid);
+//        // Create a diagonal line of 'X's from (1,1) to (4,4)
+//        grid[4][1] = "X";
+//        grid[3][2] = "X";
+//        grid[2][3] = "X";
+//        grid[1][4] = "X";
+
+//        printGrid(grid);
+//
+//        System.out.println(checkWin(grid, "X", new int[]{1,4}));
+//
+//        clearColumn(2,grid);
+//        printGrid(grid);
+//
+//        System.out.println(checkWin(grid, "X", new int[]{1,4}));
+
+
 
     }
 
@@ -52,7 +75,11 @@ public class Main {
 
         for(int r = 1; r< grid.length; r++){
             for(int c = 0; c<grid[0].length; c++){
-                grid[r][c] = "-";
+                if(r > 3){
+                    grid[r][c] = "X";
+                }else {
+                    grid[r][c] = "-";
+                }
             }
         }
 
@@ -77,7 +104,7 @@ public class Main {
 
     public static int[] pickColumn(int col, String[][]grid, String disc){
         if(col <= 0 || col > 7){
-            System.out.println("The column has to be within the range of 1 to 7.");
+            System.err.println("The column has to be within the range of 1 to 7.");
             return new int[]{-1,-1};
         }
 
@@ -148,6 +175,108 @@ public class Main {
             grid[r][column-1] = "-";
         }
     }
+
+    public static void timeBombExplode(int[] coordinate, String[][] grid){
+
+        int r = coordinate[0];
+        int c = coordinate[1];
+
+        grid[r][c] = "-";
+
+        int maxRow = grid.length;
+        int maxCol = grid[0].length;
+
+        int[][] directions = new int[][]{{1,0},{-1,0},{0,1},{0,-1},{-1,1},{1,-1},{-1,-1},{1,1}};
+
+        for(int[] direction: directions){
+            int newR = r + direction[0];
+            int newC = c + direction[1];
+
+            if(newR >=1 && newR < maxRow && newC >=0 && newC <maxCol){
+                grid[newR][newC] = "-";
+            }
+        }
+    }
+
+    public static void checkForFloatingDiscs(String[][] grid, int[]coordinate){
+
+            int col = coordinate[1];
+
+
+            int prevFloatingRow = -1;
+            if(col-1 >= 0 ){
+                prevFloatingRow = findFloatingDiscRow(col-1, grid);
+            }
+
+            if(prevFloatingRow != -1){
+                int prevEmptyRow = findEmptyRow(col-1,grid);
+                moveDownFloatingDiscs(prevFloatingRow,prevEmptyRow,col-1,grid);
+            }
+
+            int floatingRow = findFloatingDiscRow(col, grid);
+
+            if(floatingRow != -1){
+                int emptyRow = findEmptyRow(col,grid);
+                moveDownFloatingDiscs(floatingRow,emptyRow,col,grid);
+            }
+            int nextFloatingRow = -1;
+            if(col+1 < grid[0].length ){
+                nextFloatingRow = findFloatingDiscRow(col+1, grid);
+            }
+
+            if(nextFloatingRow != -1){
+                int nextEmptyRow = findEmptyRow(col+1,grid);
+                moveDownFloatingDiscs(nextFloatingRow,nextEmptyRow,col+1,grid);
+            }
+
+    }
+
+
+    public static int findEmptyRow(int col, String[][] grid){
+
+        int emptyRow = -1;
+
+        for(int r=grid.length-1; r >=1; r--){
+            if(grid[r][col].equals("-")){
+                emptyRow = r;
+                break;
+            }
+        }
+
+        return emptyRow;
+
+    }
+
+    public static int findFloatingDiscRow(int col, String[][]grid){
+
+        int floatingRow = -1;
+        for(int r=1; r<grid.length-1; r++){
+            if(grid[r+1][col].equals("-") && !(grid[r][col].equals("-"))) {
+                floatingRow = r;
+                break;
+            }
+
+        }
+
+        return floatingRow;
+    }
+
+    public static void moveDownFloatingDiscs(int floatingDiscRow, int emptyDiscRow, int col, String[][] grid){
+
+            for(int r = emptyDiscRow; r>0; r--){
+                if(floatingDiscRow > 0){
+                    grid[r][col] = grid[floatingDiscRow][col];
+                } else{
+                    grid[r][col] = "-";
+                }
+                floatingDiscRow -=1;
+
+
+            }
+    }
+
+
+
 
 
 }

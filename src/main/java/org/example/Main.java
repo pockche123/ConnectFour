@@ -7,11 +7,15 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class Main {
 
+public class Main {
+// checking if the boxes are full
+//  for player 2 functionality of the bomb.
+//    infinite bombs for each player? 
     private static Scanner stdin = new Scanner(System.in);
     private static final String[][] grid = new String[7][7];
     public static void main(String[] args) {
+
 
         System.out.println();
         System.out.println("Welcome to the game of Connect Four. Please start the game with player 1 by picking a column.");
@@ -20,28 +24,83 @@ public class Main {
 
         boolean player1Turn = true;
         boolean player2Turn = false;
+        boolean player1Win = false;
+        boolean player2Win = false;
 
         boolean gameOn = true;
-
+        boolean timeBombPressed = false;
+        int timeBombCount = 4;
+        int[] timeBombCoordinate = new int[]{-1,-1};
         while(gameOn){
-
+            int[] coordinate = new int[]{-1,-1};
+            boolean bombPressed = false;
             if(player1Turn){
                 System.out.println("Player 1, please pick a suitable column: ");
-                int[] coordinate = new int[]{-1,-1};
                 while(Arrays.equals(coordinate, new int[]{-1, -1})){
-                    coordinate = pickColumn(Integer.parseInt(stdin.nextLine()), grid, "X");
+                    String input = stdin.nextLine();
+                    if(input.equalsIgnoreCase("b") || input.equals("*")){
+                        if(input.equalsIgnoreCase("b")) {
+                            coordinate = pickColumn(stdin.nextLine(), grid, "-");
+                            bombPressed = true;
+                        }
+                        if(input.equals("*")){
+                            coordinate = pickColumn(stdin.nextLine(),grid,"*");
+                            timeBombPressed = true;
+                            timeBombCoordinate = new int[] {coordinate[0], coordinate[1]};
+                        }
+
+
+                    } else{
+                        coordinate = pickColumn(input, grid, "X");
+                    }
+
                 }
+
+                if(bombPressed){
+                    System.out.println(coordinate[1]);
+                    clearColumn(coordinate[1],grid);
+                }
+
+
+
                 System.out.printf("Player 1 has picked the column %d. \n", coordinate[1]+1);
                 printGrid(grid);
                 player1Turn = false;
                 player2Turn = true;
             }
 
+            player1Win = checkWin(grid,"X",coordinate);
+            if(player1Win){
+                System.out.println("Game over. Player 1 has won the game.");
+                break;
+            }
+
+            if(timeBombPressed){
+                timeBombCount -= 1;
+
+            }
+            if (timeBombCount == 0) {
+
+                boolean winCheck = timeBombCountEqualsZeroWin(timeBombCoordinate,grid);
+                System.out.println(winCheck);
+                printGrid(grid);
+                if(winCheck){
+                    break;
+                }
+                timeBombPressed =false;
+
+            }
+            System.out.println(timeBombCount);
+
+
+
+
+            coordinate = new int[]{-1,-1};
             if(player2Turn){
                 System.out.println("Player 2, please pick a suitable column: ");
-                int[] coordinate = new int[]{-1,-1};
+
                 while(Arrays.equals(coordinate, new int[]{-1, -1})){
-                    coordinate = pickColumn(Integer.parseInt(stdin.nextLine()), grid, "O");
+                    coordinate = pickColumn(stdin.nextLine(), grid, "O");
                 }
                 System.out.printf("Player 2 has picked the column %d. \n", coordinate[1]+1);
                 printGrid(grid);
@@ -49,13 +108,80 @@ public class Main {
                 player2Turn = false;
 
             }
+            player2Win = checkWin(grid,"O",coordinate);
+            if(player2Win){
+                System.out.println("Game over. Player 2 has won the game.");
+                break;
+            }
+            System.out.println(timeBombCount);
+            if(timeBombPressed){
+                timeBombCount -= 1;
+
+
+            }
+
+            if(timeBombCount == 0){
+
+                boolean winCheck = timeBombCountEqualsZeroWin(timeBombCoordinate,grid);
+                printGrid(grid);
+                if(winCheck){
+                    break;
+                }
+                timeBombPressed = false;
+            }
+
+
+
+
+
+
+
 
         }
 
-//        pickColumn(9,grid,"O");
 
 
     }
+
+    public static boolean timeBombCountEqualsZeroWin(int[] timeBombCoordinate, String[][] grid){
+        boolean player1Win = false;
+        boolean player2Win = false;
+        if(!Arrays.equals(timeBombCoordinate, new int[]{-1, -1})) {
+            timeBombExplode(timeBombCoordinate,grid);
+            checkForFloatingDiscs(grid, timeBombCoordinate);
+            player1Win = checkWinTimeBomb(grid,"X",timeBombCoordinate);
+            player2Win = checkWinTimeBomb(grid, "O",timeBombCoordinate);
+
+            if(player1Win && player2Win){
+                System.out.println("Game over. Draw!");
+                return true;
+
+            } else if(player1Win){
+                System.out.println("Game over. Player 1 has won the game.");
+                return true;
+
+            } else if(player2Win){
+                System.out.println("Game over. Player 2 has won the game.");
+                return true;
+
+            }
+            return false;
+
+        }
+        return false;
+    }
+
+    public static boolean isNumber(String str){
+        try{
+            Integer.parseInt(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+
+        }
+    }
+
+
 
     public static void setUpGrid(String[][] grid){
         int num = 1;
@@ -91,11 +217,21 @@ public class Main {
 
     }
 
-    public static int[] pickColumn(int col, String[][]grid, String disc){
+    public static int[] pickColumn(String input, String[][]grid, String disc){
+
+        boolean inputIsNumber = isNumber(input);
+        if(!inputIsNumber ){
+            System.err.println("Column has to be a number within the range of 1 to 7");
+            return new int[]{-1,-1};
+        }
+        int col = Integer.parseInt(input);
+
         if(col <= 0 || col > 7){
             System.err.println("Please pick the column within the range of 1 to 7.");
             return new int[]{-1,-1};
         }
+
+
 
         for(int r = grid.length - 1; r >= 0; r--) {
             if (grid[r][col - 1].equals("-")) {
@@ -108,6 +244,25 @@ public class Main {
             System.out.printf("Column %d is full. Please pick another column. \n", col);
             return new int[]{-1, -1};
 
+
+    }
+//    4 sides win
+    public static boolean checkWinTimeBomb(String[][] grid, String disc, int[] bombCoordinates){
+
+        int r = bombCoordinates[0];
+        int c = bombCoordinates[1];
+
+        boolean leftCheck = checkWin(grid, disc, new int[]{r,c-1});
+        boolean leftUpCheck = checkWin(grid, disc, new int[]{r-1,c-1});
+        boolean leftDownCheck = checkWin(grid, disc, new int[]{r+1,c-1});
+        boolean check = checkWin(grid, disc,new int[]{r,c});
+        boolean upCheck = checkWin(grid, disc, new int[]{r-1,c});
+        boolean downCheck = checkWin(grid, disc, new int[]{r+1,c});
+        boolean rightCheck = checkWin(grid, disc, new int[]{r,c+1});
+        boolean rightUpCheck = checkWin(grid, disc, new int[]{r-1,c+1});
+        boolean rightDownCheck = checkWin(grid, disc, new int[]{r+1,c+1});
+
+        return leftCheck || leftUpCheck || leftDownCheck || check || upCheck || downCheck || rightCheck || rightUpCheck || rightDownCheck;
 
     }
 
@@ -138,6 +293,8 @@ public class Main {
 
     }
 
+
+
     public static int checkUniDirectionalCount(int r, int c, int rowStep, int colStep, String disc, String[][] grid){
         int count = 0;
         int rowLength = grid.length;
@@ -162,8 +319,10 @@ public class Main {
     public static void clearColumn(int column, String[][] grid){
 
         for(int r=1; r<grid.length; r++){
-            grid[r][column-1] = "-";
+            grid[r][column] = "-";
         }
+
+        printGrid(grid);
     }
 
     public static void timeBombExplode(int[] coordinate, String[][] grid){
@@ -186,6 +345,7 @@ public class Main {
                 grid[newR][newC] = "-";
             }
         }
+        checkForFloatingDiscs(grid,coordinate);
     }
 
     public static void checkForFloatingDiscs(String[][] grid, int[]coordinate){

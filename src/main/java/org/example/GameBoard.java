@@ -1,35 +1,43 @@
 package org.example;
 
 public class GameBoard {
-    private String[][] grid;
+    private String[][] board;
 
     public GameBoard() {
-        grid = new String[7][7];
-        setUpBoard(grid);
+        board = new String[7][7];
+        setUpBoard();
     }
 
-    public static void setUpBoard(String[][]grid){
+    public String[][] getBoard() {
+        return board;
+    }
+
+    public void setBoard(String[][] board) {
+        this.board = board;
+    }
+
+    public  void setUpBoard(){
         int num = 1;
-        for(int i=0; i<grid[0].length; i++){
-            grid[0][i] = Integer.toString(num);
+        for(int i=0; i<board[0].length; i++){
+            board[0][i] = Integer.toString(num);
             num += 1;
         }
 
-        for(int r = 1; r< grid.length; r++){
-            for(int c = 0; c<grid[0].length; c++){
-                grid[r][c] = "-";
+        for(int r = 1; r< board.length; r++){
+            for(int c = 0; c<board[0].length; c++){
+                board[r][c] = "-";
             }
         }
-        printGrid(grid);
+        printBoard();
 
 
     }
 
-    public static void printGrid(String[][]grid){
+    public  void printBoard(){
 
-        for(int r = 0; r< grid.length; r++){
-            for(int c = 0; c<grid[0].length; c++){
-                System.out.printf("%s \t",grid[r][c]);
+        for(int r = 0; r< board.length; r++){
+            for(int c = 0; c<board[0].length; c++){
+                System.out.printf("%s \t",board[r][c]);
             }
             System.out.println();
         }
@@ -39,6 +47,23 @@ public class GameBoard {
         System.out.println();
 
     }
+
+    private boolean isFull(){
+
+        for(int c=0; c<board[0].length; c++){
+            if(board[1][c].equals("-")){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
+
+
+
 
 
 

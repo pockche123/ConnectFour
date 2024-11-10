@@ -118,17 +118,17 @@ public class Main {
 
 
 
-    private static boolean checkFullGrid(String[][] grid){
-
-        for(int c=0; c<grid[0].length; c++){
-            if(grid[1][c].equals("-")){
-                return false;
-            }
-        }
-
-        return true;
-    }
-
+//    private static boolean checkFullGrid(String[][] grid){
+//
+//        for(int c=0; c<grid[0].length; c++){
+//            if(grid[1][c].equals("-")){
+//                return false;
+//            }
+//        }
+//
+//        return true;
+//    }
+//
 
 
     private static int[][] handleCoordinates(int player, String[][] grid, int[] savedCoordinate){
@@ -209,81 +209,81 @@ public class Main {
         return -1;
     }
 
-    public static boolean isNumber(String str){
-        try{
-            Integer.parseInt(str);
-            return true;
-        } catch(NumberFormatException e){
-            return false;
-
-        }
-    }
-
-
-
-    public static void setUpGrid(String[][] grid){
-        int num = 1;
-        for(int i=0; i<grid[0].length; i++){
-            grid[0][i] = Integer.toString(num);
-            num += 1;
-        }
-
-        for(int r = 1; r< grid.length; r++){
-            for(int c = 0; c<grid[0].length; c++){
-                    grid[r][c] = "-";
-                }
-        }
-        printGrid(grid);
-
-
-    }
+//    public static boolean isNumber(String str){
+//        try{
+//            Integer.parseInt(str);
+//            return true;
+//        } catch(NumberFormatException e){
+//            return false;
+//
+//        }
+//    }
 
 
 
-    public static void printGrid(String[][]grid){
-
-        for(int r = 0; r< grid.length; r++){
-            for(int c = 0; c<grid[0].length; c++){
-                System.out.printf("%s \t",grid[r][c]);
-            }
-            System.out.println();
-        }
-
-        System.out.println("Player 1: X");
-        System.out.println("Player 2: O");
-        System.out.println();
-
-    }
-
-    public static int[] pickColumn(String input, String[][]grid, String disc){
-
-        boolean inputIsNumber = isNumber(input);
-        if(!inputIsNumber ){
-            System.err.println("Column has to be a number within the range of 1 to 7");
-            return new int[]{-1,-1};
-        }
-        int col = Integer.parseInt(input);
-
-        if(col <= 0 || col > 7){
-            System.err.println("Please pick the column within the range of 1 to 7.");
-            return new int[]{-1,-1};
-        }
+//    public static void setUpGrid(String[][] grid){
+//        int num = 1;
+//        for(int i=0; i<grid[0].length; i++){
+//            grid[0][i] = Integer.toString(num);
+//            num += 1;
+//        }
+//
+//        for(int r = 1; r< grid.length; r++){
+//            for(int c = 0; c<grid[0].length; c++){
+//                    grid[r][c] = "-";
+//                }
+//        }
+//        printGrid(grid);
+//
+//
+//    }
 
 
 
-        for(int r = grid.length - 1; r >= 0; r--) {
-            if (grid[r][col - 1].equals("-")) {
-                grid[r][col - 1] = disc;
-                return new int[]{r, col - 1};
-            }
-        }
+//    public static void printGrid(String[][]grid){
+//
+//        for(int r = 0; r< grid.length; r++){
+//            for(int c = 0; c<grid[0].length; c++){
+//                System.out.printf("%s \t",grid[r][c]);
+//            }
+//            System.out.println();
+//        }
+//
+//        System.out.println("Player 1: X");
+//        System.out.println("Player 2: O");
+//        System.out.println();
+//
+//    }
 
-
-            System.out.printf("Column %d is full. Please pick another column. \n", col);
-            return new int[]{-1, -1};
-
-
-    }
+//    public static int[] pickColumn(String input, String[][]grid, String disc){
+//
+//        boolean inputIsNumber = isNumber(input);
+//        if(!inputIsNumber ){
+//            System.err.println("Column has to be a number within the range of 1 to 7");
+//            return new int[]{-1,-1};
+//        }
+//        int col = Integer.parseInt(input);
+//
+//        if(col <= 0 || col > 7){
+//            System.err.println("Please pick the column within the range of 1 to 7.");
+//            return new int[]{-1,-1};
+//        }
+//
+//
+//
+//        for(int r = grid.length - 1; r >= 0; r--) {
+//            if (grid[r][col - 1].equals("-")) {
+//                grid[r][col - 1] = disc;
+//                return new int[]{r, col - 1};
+//            }
+//        }
+//
+//
+//            System.out.printf("Column %d is full. Please pick another column. \n", col);
+//            return new int[]{-1, -1};
+//
+//
+//    }
 
     public static boolean checkWinTimeBomb(String[][] grid, String disc, int[] bombCoordinates){
 
@@ -333,26 +333,26 @@ public class Main {
 
 
 
-    public static int checkUniDirectionalCount(int r, int c, int rowStep, int colStep, String disc, String[][] grid){
-        int count = 0;
-        int rowLength = grid.length;
-        int colLength = grid[0].length;
-
-        for(int i=0; i<4; i++){
-            int newR = r+ i*rowStep;
-            int newC = c+ i*colStep;
-
-            if(newR >=0 && newR < rowLength && newC >=0 && newC < colLength && grid[newR][newC].equals(disc)){
-                count += 1;
-            }else{
-                break;
-            }
-        }
-
-
-        return count;
-
-    }
+//    public static int checkUniDirectionalCount(int r, int c, int rowStep, int colStep, String disc, String[][] grid){
+//        int count = 0;
+//        int rowLength = grid.length;
+//        int colLength = grid[0].length;
+//
+//        for(int i=0; i<4; i++){
+//            int newR = r+ i*rowStep;
+//            int newC = c+ i*colStep;
+//
+//            if(newR >=0 && newR < rowLength && newC >=0 && newC < colLength && grid[newR][newC].equals(disc)){
+//                count += 1;
+//            }else{
+//                break;
+//            }
+//        }
+//
+//
+//        return count;
+//
+//    }
 
     public static void clearColumn(int column, String[][] grid){
 

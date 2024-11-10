@@ -9,9 +9,7 @@ import java.util.Scanner;
 
 
 public class Main {
-// checking if the boxes are full
-//  for player 2 functionality of the bomb.
-//    infinite bombs for each player?
+
     private static Scanner stdin = new Scanner(System.in);
     private static final String[][] grid = new String[7][7];
     public static void main(String[] args) {
@@ -22,95 +20,113 @@ public class Main {
         System.out.println();
         setUpGrid(grid);
 
-        boolean player1Turn = true;
-        boolean player2Turn = false;
-        boolean player1Win = false;
-        boolean player2Win = false;
-
-
-        boolean timeBombActivated = false;
-        int timeBombCount = 4;
-        int[] savedCoordinate = new int[]{-1,-1};
-
+        GameState gameState = new GameState(false, 4, new int[]{-1, -1});
 
         while(true){
 
-            {
-
-                int[][]  coordinates = handleCoordinates(1,grid,savedCoordinate);
-                int[] coordinate = coordinates[0];
-                int[] timeBombCoordinate  = coordinates[1];
-
-                player1Win = checkWin(grid,"X",coordinate);
-                if(player1Win){
-                    System.out.println("Game over. Player 1 has won the game.");
-                    break;
-                }
-                if(!(Arrays.equals(timeBombCoordinate,new int[]{-1,-1}))){
-                    timeBombActivated = true;
-                    savedCoordinate = new int[]{timeBombCoordinate[0], timeBombCoordinate[1]};
-
-                }
-                if(timeBombActivated){
-                    timeBombCount -=1;
-                }
-                System.out.println(timeBombCount);
-                if(timeBombCount == 0){
-                    System.out.println(savedCoordinate[0] + ", " +  savedCoordinate[1]);
-                    boolean winCheck = timeBombCountEqualsZeroWin(savedCoordinate,grid);
-                    printGrid(grid);
-                    if(winCheck){
-                        break;
-                    }
-                    timeBombActivated = false;
-                    timeBombCount = 4;
-                    savedCoordinate = new int[]{-1,-1};
-                }
-
-
-
+            int turn1 = playTurn(1, gameState);
+            if(turn1 != -1){
+                printOutcome(turn1);
+                break;
             }
 
+            if(checkFullGrid(grid)){
+                System.out.println("Game over. Draw!");
+                break;
+            }
+            int turn2 = playTurn(2, gameState);
+            if(turn2 != -1){
+                printOutcome(turn2);
+                break;
+            }
 
-
-            {
-                int[][] coordinates = handleCoordinates(2, grid,savedCoordinate);
-                int[] coordinate = coordinates[0];
-                int [] timeBombCoordinate = coordinates[1];
-
-                player2Win = checkWin(grid, "O", coordinate);
-                if (player2Win) {
-                    System.out.println("Game over. Player 2 has won the game.");
-                    break;
-                }
-
-                if(!(Arrays.equals(timeBombCoordinate,new int[]{-1,-1}))){
-                    timeBombActivated = true;
-                    System.out.println(savedCoordinate[0] + ", " +  savedCoordinate[1]);
-                    savedCoordinate = new int[]{timeBombCoordinate[0], timeBombCoordinate[1]};
-
-                }
-                if(timeBombActivated){
-                    timeBombCount -=1;
-                }
-                System.out.println(timeBombCount);
-                if(timeBombCount == 0){
-                    System.out.println(savedCoordinate[0] + ", " +  savedCoordinate[1]);
-                    boolean winCheck = timeBombCountEqualsZeroWin(savedCoordinate,grid);
-                    printGrid(grid);
-                    if(winCheck){
-                        break;
-                    }
-                    timeBombActivated = false;
-                    timeBombCount = 4;
-                    savedCoordinate = new int[]{-1,-1};
-                }
+            if(checkFullGrid(grid)){
+                System.out.println("Game over. Draw!");
+                break;
             }
 
         }
 
 
 
+    }
+
+    private static int playTurn(int player, GameState state){
+
+        int[] coordinate = new int[]{-1,-1};
+        int[] timeBombCoordinate = new int[]{-1,-1};
+        while(Arrays.equals(coordinate, new int[]{-1,-1})) {
+            int[][] coordinates = handleCoordinates(player, grid, state.savedCoordinate);
+            coordinate = coordinates[0];
+            timeBombCoordinate = coordinates[1];
+
+        }
+        String disc = "X";
+        if(player == 2){
+            disc = "O";
+        }
+
+        boolean playerWin = checkWin(grid, disc, coordinate);
+        if (playerWin) {
+            return player;
+        }
+
+        handleTimeBomb(timeBombCoordinate,state);
+
+        if (state.timeBombCount == 0) {
+            int winner = timeBombCountEqualsZeroWin(state.savedCoordinate, grid);
+            printGrid(grid);
+            resetTimer(state);
+            return winner;
+
+        }
+
+        return -1;
+
+    }
+
+    private static void printOutcome(int player) {
+        if(player == 1){
+            System.out.println("Game over. Player 1 is the winner!");
+        }else if(player == 2){
+            System.out.println("Game over. Player 2 is the winner!");
+        } else if (player == 0){
+            System.out.println("Game over. Draw!");
+        }
+    }
+
+    private static void handleTimeBomb(int[] timeBombCoordinate, GameState state){
+        if (!(Arrays.equals(timeBombCoordinate, new int[]{-1, -1}))) {
+            state.timeBombActivated = true;
+
+            state.savedCoordinate = new int[]{timeBombCoordinate[0], timeBombCoordinate[1]};
+
+        }
+        if (state.timeBombActivated) {
+            state.timeBombCount -= 1;
+        }
+    }
+
+
+    private static void resetTimer(GameState state){
+
+        state.timeBombActivated = false;
+        state.timeBombCount = 4;
+        state.savedCoordinate = new int[]{-1, -1};
+
+    }
+
+
+
+    private static boolean checkFullGrid(String[][] grid){
+
+        for(int c=0; c<grid[0].length; c++){
+            if(grid[1][c].equals("-")){
+                return false;
+            }
+        }
+
+        return true;
     }
 
 
@@ -135,6 +151,7 @@ public class Main {
                             timeBombCoordinate = new int[]{coordinate[0], coordinate[1]};
                         } else{
                             System.err.println("Error: A new time bomb cannot be placed until the current one has detonated.");
+                            return new int[][]{{-1,-1}, {-1,-1}};
 
                         }
                     }
@@ -164,7 +181,7 @@ public class Main {
 
 
 
-    public static boolean timeBombCountEqualsZeroWin(int[] timeBombCoordinate, String[][] grid){
+    public static int timeBombCountEqualsZeroWin(int[] timeBombCoordinate, String[][] grid){
 
         if(!Arrays.equals(timeBombCoordinate, new int[]{-1, -1})) {
             timeBombExplode(timeBombCoordinate,grid);
@@ -173,23 +190,23 @@ public class Main {
             boolean player2Win = checkWinTimeBomb(grid, "O",timeBombCoordinate);
 
             if(player1Win && player2Win){
-                System.out.println("Game over. Draw!");
-                return true;
+
+                return 0;
 
             } else if(player1Win){
-                System.out.println("Game over. Player 1 has won the game.");
-                return true;
+
+                return 1;
 
             } else if(player2Win){
-                System.out.println("Game over. Player 2 has won the game.");
-                return true;
+
+                return 2;
 
             }else {
-                return false;
+                return -1;
             }
 
         }
-        return false;
+        return -1;
     }
 
     public static boolean isNumber(String str){

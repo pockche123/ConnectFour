@@ -51,70 +51,70 @@ public class Main {
 
     }
 
-    private static int playTurn(int player, GameState state){
+//    private static int playTurn(int player, GameState state){
+//
+//        int[] coordinate = new int[]{-1,-1};
+//        int[] timeBombCoordinate = new int[]{-1,-1};
+//        while(Arrays.equals(coordinate, new int[]{-1,-1})) {
+//            int[][] coordinates = handleCoordinates(player, grid, state.savedCoordinate);
+//            coordinate = coordinates[0];
+//            timeBombCoordinate = coordinates[1];
+//
+//        }
+//        String disc = "X";
+//        if(player == 2){
+//            disc = "O";
+//        }
+//
+//        boolean playerWin = checkWin(grid, disc, coordinate);
+//        if (playerWin) {
+//            return player;
+//        }
+//
+//        handleTimeBomb(timeBombCoordinate,state);
+//
+//        if (state.timeBombCount == 0) {
+//            int winner = timeBombCountEqualsZeroWin(state.savedCoordinate, grid);
+//            printGrid(grid);
+//            resetTimer(state);
+//            return winner;
+//
+//        }
+//
+//        return -1;
+//
+//    }
 
-        int[] coordinate = new int[]{-1,-1};
-        int[] timeBombCoordinate = new int[]{-1,-1};
-        while(Arrays.equals(coordinate, new int[]{-1,-1})) {
-            int[][] coordinates = handleCoordinates(player, grid, state.savedCoordinate);
-            coordinate = coordinates[0];
-            timeBombCoordinate = coordinates[1];
+//    private static void printOutcome(int player) {
+//        if(player == 1){
+//            System.out.println("Game over. Player 1 is the winner!");
+//        }else if(player == 2){
+//            System.out.println("Game over. Player 2 is the winner!");
+//        } else if (player == 0){
+//            System.out.println("Game over. Draw!");
+//        }
+//    }
 
-        }
-        String disc = "X";
-        if(player == 2){
-            disc = "O";
-        }
-
-        boolean playerWin = checkWin(grid, disc, coordinate);
-        if (playerWin) {
-            return player;
-        }
-
-        handleTimeBomb(timeBombCoordinate,state);
-
-        if (state.timeBombCount == 0) {
-            int winner = timeBombCountEqualsZeroWin(state.savedCoordinate, grid);
-            printGrid(grid);
-            resetTimer(state);
-            return winner;
-
-        }
-
-        return -1;
-
-    }
-
-    private static void printOutcome(int player) {
-        if(player == 1){
-            System.out.println("Game over. Player 1 is the winner!");
-        }else if(player == 2){
-            System.out.println("Game over. Player 2 is the winner!");
-        } else if (player == 0){
-            System.out.println("Game over. Draw!");
-        }
-    }
-
-    private static void handleTimeBomb(int[] timeBombCoordinate, GameState state){
-        if (!(Arrays.equals(timeBombCoordinate, new int[]{-1, -1}))) {
-            state.timeBombActivated = true;
-
-            state.savedCoordinate = new int[]{timeBombCoordinate[0], timeBombCoordinate[1]};
-
-        }
-        if (state.timeBombActivated) {
-            state.timeBombCount -= 1;
-        }
-    }
+//    private static void handleTimeBomb(int[] timeBombCoordinate, GameState state){
+//        if (!(Arrays.equals(timeBombCoordinate, new int[]{-1, -1}))) {
+//            state.timeBombActivated = true;
+//
+//            state.savedCoordinate = new int[]{timeBombCoordinate[0], timeBombCoordinate[1]};
+//
+//        }
+//        if (state.timeBombActivated) {
+//            state.timeBombCount -= 1;
+//        }
+//    }
 
 
-    private static void resetTimer(GameState state){
-
-        state.timeBombActivated = false;
-        state.timeBombCount = 4;
-        state.savedCoordinate = new int[]{-1, -1};
-
-    }
+//    private static void resetTimer(GameState state){
+//
+//        state.timeBombActivated = false;
+//        state.timeBombCount = 4;
+//        state.savedCoordinate = new int[]{-1, -1};
+//
+//    }
 
 
 
@@ -131,83 +131,83 @@ public class Main {
 //
 
 
-    private static int[][] handleCoordinates(int player, String[][] grid, int[] savedCoordinate){
-            int[] coordinate = new int[] {-1,-1};
-            int[] timeBombCoordinate = new int[] {-1,-1};
-            boolean bombPressed = false;
+//    private static int[][] handleCoordinates(int player, String[][] grid, int[] savedCoordinate){
+//            int[] coordinate = new int[] {-1,-1};
+//            int[] timeBombCoordinate = new int[] {-1,-1};
+//            boolean bombPressed = false;
+//
+//
+//            System.out.printf("Player %d, please pick a suitable column: \n", player);
+//            while(Arrays.equals(coordinate, new int[]{-1, -1})){
+//                String input = stdin.nextLine();
+//                if(input.equalsIgnoreCase("b") || input.equals("*")){
+//                    if(input.equalsIgnoreCase("b")) {
+//                        coordinate = pickColumn(stdin.nextLine(), grid, "-");
+//                        bombPressed = true;
+//                    }
+//                    if(input.equals("*")){
+//                        if(Arrays.equals(savedCoordinate, new int[]{-1,-1})) {
+//                            coordinate = pickColumn(stdin.nextLine(), grid, "*");
+//                            timeBombCoordinate = new int[]{coordinate[0], coordinate[1]};
+//                        } else{
+//                            System.err.println("Error: A new time bomb cannot be placed until the current one has detonated.");
+//                            return new int[][]{{-1,-1}, {-1,-1}};
+//
+//                        }
+//                    }
+//
+//                } else{
+//                    if(player == 1) {
+//                        coordinate = pickColumn(input, grid, "X");
+//                    } else {
+//                        coordinate = pickColumn(input, grid, "O");
+//                    }
+//                }
+//
+//            }
+//
+//            if(bombPressed){
+//                System.out.println(coordinate[1]);
+//                clearColumn(coordinate[1],grid);
+//            }
+//
+//
+//            System.out.printf("Player %d has picked the column %d. \n", player, coordinate[1]+1);
+//            printGrid(grid);
+//            return new int[][]{coordinate, timeBombCoordinate};
+//
+//    }
 
 
-            System.out.printf("Player %d, please pick a suitable column: \n", player);
-            while(Arrays.equals(coordinate, new int[]{-1, -1})){
-                String input = stdin.nextLine();
-                if(input.equalsIgnoreCase("b") || input.equals("*")){
-                    if(input.equalsIgnoreCase("b")) {
-                        coordinate = pickColumn(stdin.nextLine(), grid, "-");
-                        bombPressed = true;
-                    }
-                    if(input.equals("*")){
-                        if(Arrays.equals(savedCoordinate, new int[]{-1,-1})) {
-                            coordinate = pickColumn(stdin.nextLine(), grid, "*");
-                            timeBombCoordinate = new int[]{coordinate[0], coordinate[1]};
-                        } else{
-                            System.err.println("Error: A new time bomb cannot be placed until the current one has detonated.");
-                            return new int[][]{{-1,-1}, {-1,-1}};
 
-                        }
-                    }
-
-                } else{
-                    if(player == 1) {
-                        coordinate = pickColumn(input, grid, "X");
-                    } else {
-                        coordinate = pickColumn(input, grid, "O");
-                    }
-                }
-
-            }
-
-            if(bombPressed){
-                System.out.println(coordinate[1]);
-                clearColumn(coordinate[1],grid);
-            }
-
-
-            System.out.printf("Player %d has picked the column %d. \n", player, coordinate[1]+1);
-            printGrid(grid);
-            return new int[][]{coordinate, timeBombCoordinate};
-
-    }
-
-
-
-
-    public static int timeBombCountEqualsZeroWin(int[] timeBombCoordinate, String[][] grid){
-
-        if(!Arrays.equals(timeBombCoordinate, new int[]{-1, -1})) {
-            timeBombExplode(timeBombCoordinate,grid);
-            checkForFloatingDiscs(grid, timeBombCoordinate);
-            boolean player1Win = checkWinTimeBomb(grid,"X",timeBombCoordinate);
-            boolean player2Win = checkWinTimeBomb(grid, "O",timeBombCoordinate);
-
-            if(player1Win && player2Win){
-
-                return 0;
-
-            } else if(player1Win){
-
-                return 1;
-
-            } else if(player2Win){
-
-                return 2;
-
-            }else {
-                return -1;
-            }
-
-        }
-        return -1;
-    }
+//
+//    public static int timeBombCountEqualsZeroWin(int[] timeBombCoordinate, String[][] grid){
+//
+//        if(!Arrays.equals(timeBombCoordinate, new int[]{-1, -1})) {
+//            timeBombExplode(timeBombCoordinate,grid);
+//            checkForFloatingDiscs(grid, timeBombCoordinate);
+//            boolean player1Win = checkWinTimeBomb(grid,"X",timeBombCoordinate);
+//            boolean player2Win = checkWinTimeBomb(grid, "O",timeBombCoordinate);
+//
+//            if(player1Win && player2Win){
+//
+//                return 0;
+//
+//            } else if(player1Win){
+//
+//                return 1;
+//
+//            } else if(player2Win){
+//
+//                return 2;
+//
+//            }else {
+//                return -1;
+//            }
+//
+//        }
+//        return -1;
+//    }
 
 //    public static boolean isNumber(String str){
 //        try{

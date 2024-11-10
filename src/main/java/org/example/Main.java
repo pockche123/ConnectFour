@@ -285,51 +285,51 @@ public class Main {
 //
 //    }
 
-    public static boolean checkWinTimeBomb(String[][] grid, String disc, int[] bombCoordinates){
+//    public static boolean checkWinTimeBomb(String[][] grid, String disc, int[] bombCoordinates){
+//
+//        int r = bombCoordinates[0];
+//        int c = bombCoordinates[1];
+//
+//        boolean leftCheck = checkWin(grid, disc, new int[]{r,c-1});
+//        boolean leftUpCheck = checkWin(grid, disc, new int[]{r-1,c-1});
+//        boolean leftDownCheck = checkWin(grid, disc, new int[]{r+1,c-1});
+//        boolean check = checkWin(grid, disc,new int[]{r,c});
+//        boolean upCheck = checkWin(grid, disc, new int[]{r-1,c});
+//        boolean downCheck = checkWin(grid, disc, new int[]{r+1,c});
+//        boolean rightCheck = checkWin(grid, disc, new int[]{r,c+1});
+//        boolean rightUpCheck = checkWin(grid, disc, new int[]{r-1,c+1});
+//        boolean rightDownCheck = checkWin(grid, disc, new int[]{r+1,c+1});
+//
+//        return leftCheck || leftUpCheck || leftDownCheck || check || upCheck || downCheck || rightCheck || rightUpCheck || rightDownCheck;
+//
+//    }
 
-        int r = bombCoordinates[0];
-        int c = bombCoordinates[1];
-
-        boolean leftCheck = checkWin(grid, disc, new int[]{r,c-1});
-        boolean leftUpCheck = checkWin(grid, disc, new int[]{r-1,c-1});
-        boolean leftDownCheck = checkWin(grid, disc, new int[]{r+1,c-1});
-        boolean check = checkWin(grid, disc,new int[]{r,c});
-        boolean upCheck = checkWin(grid, disc, new int[]{r-1,c});
-        boolean downCheck = checkWin(grid, disc, new int[]{r+1,c});
-        boolean rightCheck = checkWin(grid, disc, new int[]{r,c+1});
-        boolean rightUpCheck = checkWin(grid, disc, new int[]{r-1,c+1});
-        boolean rightDownCheck = checkWin(grid, disc, new int[]{r+1,c+1});
-
-        return leftCheck || leftUpCheck || leftDownCheck || check || upCheck || downCheck || rightCheck || rightUpCheck || rightDownCheck;
-
-    }
-
-    public static boolean checkWin(String[][] grid, String disc, int[] lastCoordinates){
-        int r = lastCoordinates[0];
-        int c = lastCoordinates[1];
-
-        int upCount = checkUniDirectionalCount(r,c,-1,0,disc,grid);
-        int downCount = checkUniDirectionalCount(r,c,1,0,disc,grid);
-
-        int rightCount = checkUniDirectionalCount(r,c, 0,1,disc,grid);
-        int leftCount = checkUniDirectionalCount(r,c,0,-1,disc,grid);
-
-
-        int upRightCount = checkUniDirectionalCount(r,c,-1,1,disc,grid);
-        int downLeftCount = checkUniDirectionalCount(r,c,1,-1,disc,grid);
-
-        int upLeftCount = checkUniDirectionalCount(r,c,-1,-1,disc,grid);
-        int downRightCount = checkUniDirectionalCount(r,c,1,1,disc,grid);
-
-        int upDown = upCount + downCount;
-        int rightLeft = rightCount + leftCount;
-        int upRightDownLeft = upRightCount + downLeftCount;
-        int upLeftDownRight = upLeftCount + downRightCount;
-
-
-        return upDown >= 5 || rightLeft >= 5 || upRightDownLeft >= 5 || upLeftDownRight >= 5;
-
-    }
+//    public static boolean checkWin(String[][] grid, String disc, int[] lastCoordinates){
+//        int r = lastCoordinates[0];
+//        int c = lastCoordinates[1];
+//
+//        int upCount = checkUniDirectionalCount(r,c,-1,0,disc,grid);
+//        int downCount = checkUniDirectionalCount(r,c,1,0,disc,grid);
+//
+//        int rightCount = checkUniDirectionalCount(r,c, 0,1,disc,grid);
+//        int leftCount = checkUniDirectionalCount(r,c,0,-1,disc,grid);
+//
+//
+//        int upRightCount = checkUniDirectionalCount(r,c,-1,1,disc,grid);
+//        int downLeftCount = checkUniDirectionalCount(r,c,1,-1,disc,grid);
+//
+//        int upLeftCount = checkUniDirectionalCount(r,c,-1,-1,disc,grid);
+//        int downRightCount = checkUniDirectionalCount(r,c,1,1,disc,grid);
+//
+//        int upDown = upCount + downCount;
+//        int rightLeft = rightCount + leftCount;
+//        int upRightDownLeft = upRightCount + downLeftCount;
+//        int upLeftDownRight = upLeftCount + downRightCount;
+//
+//
+//        return upDown >= 5 || rightLeft >= 5 || upRightDownLeft >= 5 || upLeftDownRight >= 5;
+//
+//    }
 
 
 
@@ -354,114 +354,114 @@ public class Main {
 //
 //    }
 
-    public static void clearColumn(int column, String[][] grid){
+//    public static void clearColumn(int column, String[][] grid){
+//
+//        for(int r=1; r<grid.length; r++){
+//            grid[r][column] = "-";
+//        }
+//
+//        printGrid(grid);
+//    }
 
-        for(int r=1; r<grid.length; r++){
-            grid[r][column] = "-";
-        }
+//    public static void timeBombExplode(int[] coordinate, String[][] grid){
+//
+//        int r = coordinate[0];
+//        int c = coordinate[1];
+//
+//        grid[r][c] = "-";
+//
+//        int maxRow = grid.length;
+//        int maxCol = grid[0].length;
+//
+//        int[][] directions = new int[][]{{1,0},{-1,0},{0,1},{0,-1},{-1,1},{1,-1},{-1,-1},{1,1}};
+//
+//        for(int[] direction: directions){
+//            int newR = r + direction[0];
+//            int newC = c + direction[1];
+//
+//            if(newR >=1 && newR < maxRow && newC >=0 && newC <maxCol){
+//                grid[newR][newC] = "-";
+//            }
+//        }
+//        checkForFloatingDiscs(grid,coordinate);
+//    }
 
-        printGrid(grid);
-    }
-
-    public static void timeBombExplode(int[] coordinate, String[][] grid){
-
-        int r = coordinate[0];
-        int c = coordinate[1];
-
-        grid[r][c] = "-";
-
-        int maxRow = grid.length;
-        int maxCol = grid[0].length;
-
-        int[][] directions = new int[][]{{1,0},{-1,0},{0,1},{0,-1},{-1,1},{1,-1},{-1,-1},{1,1}};
-
-        for(int[] direction: directions){
-            int newR = r + direction[0];
-            int newC = c + direction[1];
-
-            if(newR >=1 && newR < maxRow && newC >=0 && newC <maxCol){
-                grid[newR][newC] = "-";
-            }
-        }
-        checkForFloatingDiscs(grid,coordinate);
-    }
-
-    public static void checkForFloatingDiscs(String[][] grid, int[]coordinate){
-
-            int col = coordinate[1];
-
-
-            int prevFloatingRow = -1;
-            if(col-1 >= 0 ){
-                prevFloatingRow = findFloatingDiscRow(col-1, grid);
-            }
-
-            if(prevFloatingRow != -1){
-                int prevEmptyRow = findEmptyRow(col-1,grid);
-                moveDownFloatingDiscs(prevFloatingRow,prevEmptyRow,col-1,grid);
-            }
-
-            int floatingRow = findFloatingDiscRow(col, grid);
-
-            if(floatingRow != -1){
-                int emptyRow = findEmptyRow(col,grid);
-                moveDownFloatingDiscs(floatingRow,emptyRow,col,grid);
-            }
-            int nextFloatingRow = -1;
-            if(col+1 < grid[0].length ){
-                nextFloatingRow = findFloatingDiscRow(col+1, grid);
-            }
-
-            if(nextFloatingRow != -1){
-                int nextEmptyRow = findEmptyRow(col+1,grid);
-                moveDownFloatingDiscs(nextFloatingRow,nextEmptyRow,col+1,grid);
-            }
-
-    }
-
-
-    public static int findEmptyRow(int col, String[][] grid){
-
-        int emptyRow = -1;
-
-        for(int r=grid.length-1; r >=1; r--){
-            if(grid[r][col].equals("-")){
-                emptyRow = r;
-                break;
-            }
-        }
-
-        return emptyRow;
-
-    }
-
-    public static int findFloatingDiscRow(int col, String[][]grid){
-
-        int floatingRow = -1;
-        for(int r=1; r<grid.length-1; r++){
-            if(grid[r+1][col].equals("-") && !(grid[r][col].equals("-"))) {
-                floatingRow = r;
-                break;
-            }
-
-        }
-
-        return floatingRow;
-    }
-
-    public static void moveDownFloatingDiscs(int floatingDiscRow, int emptyDiscRow, int col, String[][] grid){
-
-            for(int r = emptyDiscRow; r>0; r--){
-                if(floatingDiscRow > 0){
-                    grid[r][col] = grid[floatingDiscRow][col];
-                } else{
-                    grid[r][col] = "-";
-                }
-                floatingDiscRow -=1;
+//    public static void checkForFloatingDiscs(String[][] grid, int[]coordinate){
+//
+//            int col = coordinate[1];
+//
+//
+//            int prevFloatingRow = -1;
+//            if(col-1 >= 0 ){
+//                prevFloatingRow = findFloatingDiscRow(col-1, grid);
+//            }
+//
+//            if(prevFloatingRow != -1){
+//                int prevEmptyRow = findEmptyRow(col-1,grid);
+//                moveDownFloatingDiscs(prevFloatingRow,prevEmptyRow,col-1,grid);
+//            }
+//
+//            int floatingRow = findFloatingDiscRow(col, grid);
+//
+//            if(floatingRow != -1){
+//                int emptyRow = findEmptyRow(col,grid);
+//                moveDownFloatingDiscs(floatingRow,emptyRow,col,grid);
+//            }
+//            int nextFloatingRow = -1;
+//            if(col+1 < grid[0].length ){
+//                nextFloatingRow = findFloatingDiscRow(col+1, grid);
+//            }
+//
+//            if(nextFloatingRow != -1){
+//                int nextEmptyRow = findEmptyRow(col+1,grid);
+//                moveDownFloatingDiscs(nextFloatingRow,nextEmptyRow,col+1,grid);
+//            }
+//
+//    }
 
 
-            }
-    }
+//    public static int findEmptyRow(int col, String[][] grid){
+//
+//        int emptyRow = -1;
+//
+//        for(int r=grid.length-1; r >=1; r--){
+//            if(grid[r][col].equals("-")){
+//                emptyRow = r;
+//                break;
+//            }
+//        }
+//
+//        return emptyRow;
+//
+//    }
+
+//    public static int findFloatingDiscRow(int col, String[][]grid){
+//
+//        int floatingRow = -1;
+//        for(int r=1; r<grid.length-1; r++){
+//            if(grid[r+1][col].equals("-") && !(grid[r][col].equals("-"))) {
+//                floatingRow = r;
+//                break;
+//            }
+//
+//        }
+//
+//        return floatingRow;
+//    }
+
+//    public static void moveDownFloatingDiscs(int floatingDiscRow, int emptyDiscRow, int col, String[][] grid){
+//
+//            for(int r = emptyDiscRow; r>0; r--){
+//                if(floatingDiscRow > 0){
+//                    grid[r][col] = grid[floatingDiscRow][col];
+//                } else{
+//                    grid[r][col] = "-";
+//                }
+//                floatingDiscRow -=1;
+//
+//
+//            }
+//    }
 
 
 

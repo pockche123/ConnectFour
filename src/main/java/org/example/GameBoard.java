@@ -59,6 +59,38 @@ public class GameBoard {
         return true;
     }
 
+    public int findEmptyRow(int col){
+
+        int emptyRow = -1;
+
+        for(int r=board.length-1; r >=1; r--){
+            if(board[r][col].equals("-")){
+                emptyRow = r;
+                break;
+            }
+        }
+
+        return emptyRow;
+
+    }
+
+    public  int findFloatingDiscRow(int col){
+
+        int floatingRow = -1;
+        for(int r=1; r<board.length-1; r++){
+            if(board[r+1][col].equals("-") && !(board[r][col].equals("-"))) {
+                floatingRow = r;
+                break;
+            }
+
+        }
+
+        return floatingRow;
+    }
+
+
+
+
 
 
 

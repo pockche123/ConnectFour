@@ -71,7 +71,7 @@ public class GameLogic {
             board.getBoard()[r][column] = "-";
         }
 
-        board.printBoard();
+//        board.printBoard();
     }
 
     public void checkForFloatingDiscs(int[] coordinate) {
@@ -239,7 +239,7 @@ public class GameLogic {
            String input = stdin.nextLine();
             if(input.equalsIgnoreCase("b") || input.equals("*")){
                 if(input.equalsIgnoreCase("b")) {
-                    coordinate = pickCoordinates(input,  "-");
+                    coordinate = pickCoordinates(stdin.nextLine(),  "-");
                     bombPressed = true;
                 }
                 if(input.equals("*")){

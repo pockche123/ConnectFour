@@ -210,6 +210,7 @@ public class GameLogic {
         }
         handleTimeBomb(state);
         if (state.timeBombCount == 0) {
+            System.out.println(state.timeBombCount);
             int winner = timeBombCountEqualsZeroWin(state.savedCoordinate);
             board.printBoard();
             resetTimer( );
@@ -239,6 +240,7 @@ public class GameLogic {
                     if(Arrays.equals(state.savedCoordinate, new int[]{-1,-1})) {
                         coordinate = pickCoordinates(stdin.nextLine(), "*");
                         state.savedCoordinate = new int[]{coordinate[0], coordinate[1]};
+                        state.timeBombActivated = true;
                     } else{
                         System.err.println("Error: A new time bomb cannot be placed until the current one has detonated.");
                         return new int[]{-1,-1};

@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static Scanner stdin = new Scanner(System.in);
+    private static final Scanner stdin = new Scanner(System.in);
     private static final String[][] grid = new String[7][7];
     public static void main(String[] args) {
 

@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 
 public class GameLogic {
-    private GameBoard board;
-    private GameState state;
-    private static Scanner stdin = new Scanner(System.in);
+    private final GameBoard board;
+    private final GameState state;
+    private static final Scanner stdin = new Scanner(System.in);
 
 
     public GameLogic(GameBoard board, GameState state) {
@@ -273,6 +273,8 @@ public class GameLogic {
 
 
     }
+
+
 
     public int[] pickCoordinates(String input, String disc){
 

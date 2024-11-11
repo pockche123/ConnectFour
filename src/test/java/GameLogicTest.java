@@ -122,7 +122,83 @@ public class GameLogicTest {
     }
 
     @Test
-    void testCheckWinTimeBomb
+    void testCheckWinTimeBomb_returnsFalse_whenNoConnect4(){
+        assertFalse(logic.checkWinTimeBomb("X",new int[]{2,2}));
+        assertFalse(logic.checkWinTimeBomb("O",new int[]{3,3}));
+    }
+
+    @Test
+    void testCheckWinTimeBomb_returnsTrue_whenConnect4(){
+        gameBoard.getBoard()[2][2] = "X";
+        gameBoard.getBoard()[2][3] = "X";
+        gameBoard.getBoard()[2][4] = "X";
+        gameBoard.getBoard()[2][5] = "X";
+
+        gameBoard.getBoard()[3][2] = "O";
+        gameBoard.getBoard()[3][3] = "O";
+        gameBoard.getBoard()[3][4] = "O";
+        gameBoard.getBoard()[3][5] = "O";
+
+        assertTrue(logic.checkWinTimeBomb("X", new int[]{2,2}));
+        assertTrue(logic.checkWinTimeBomb("O", new int[]{3,2}));
+    }
+
+    @Test
+    void testTimeBombCountEqualsZeroWin(){
+
+        assertEquals(-1, logic.timeBombCountEqualsZeroWin(new int[]{2,2}));
+    }
+
+
+//    @Test
+//    void takeTurn_returnWhenNoWin(){
+//        assertEquals(-1, logic.takeTurn(1,state));
+//        assertEquals(-1, logic.takeTurn(2,state));
+//    }
+
+    @Test
+    void testPickCoordinates_WhenInvalidColumn(){
+        int[] result = new int[]{-1,-1};
+        int[] compare1 = logic.pickCoordinates("- ","X");
+        int[] compare2 = logic.pickCoordinates("123213", "X");
+        int[] compare3 = logic.pickCoordinates("-2","X");
+
+        String oneStr = compare1[0] + ", " + compare1[1];
+        String twoStr = compare2[0] + ", " + compare2[1];
+        String threeStr = compare3[0] + ", " + compare3[1];
+        assertEquals(result[0] + ", " + result[1], oneStr);
+        assertEquals(result[0] + ", " + result[1], twoStr);
+        assertEquals(result[0] + ", " + result[1], threeStr);
+    }
+
+
+    @Test
+    void testPickCoordinates_WhenValidColumn(){
+        String res = "6, 1";
+        int[] arr = logic.pickCoordinates("2","X");
+        String actual = arr[0] + ", " + arr[1];
+
+        assertEquals(res, actual);
+    }
+
+    @Test
+    void testValidIsNumber(){
+        assertTrue(logic.isNumber("2"));
+        assertTrue(logic.isNumber("4"));
+        assertTrue(logic.isNumber("5"));
+    }
+
+    @Test
+    void testInValidIsNumber(){
+        assertFalse(logic.isNumber("-"));
+        assertFalse(logic.isNumber(""));
+        assertFalse(logic.isNumber("]"));
+
+    }
+
+
+
+
 
 
 

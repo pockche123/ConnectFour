@@ -1,8 +1,8 @@
 package org.example;
 
 public class GameState {
-    boolean timeBombActivated;
-    int timeBombCount;
+    public boolean timeBombActivated;
+    public int timeBombCount;
     int[] savedCoordinate;
 
     public GameState(){}

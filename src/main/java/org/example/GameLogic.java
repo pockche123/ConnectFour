@@ -321,13 +321,13 @@ public class GameLogic {
 
 
 
-    private void handleTimeBomb(GameState state){
+    public void handleTimeBomb(GameState state){
         if (state.timeBombActivated) {
             state.timeBombCount -= 1;
         }
     }
 
-    private  void resetTimer(){
+    private void resetTimer(){
 
         state.timeBombActivated = false;
         state.timeBombCount = 4;
@@ -335,7 +335,7 @@ public class GameLogic {
 
     }
 
-    public void printOutcome(int player) {
+    private void printOutcome(int player) {
         if(player == 1){
             System.out.println("Game over. Player 1 is the winner!");
         }else if(player == 2){

@@ -71,13 +71,12 @@ public class GameLogic {
             board.getBoard()[r][column] = "-";
         }
 
-//        board.printBoard();
+
     }
 
-    public void checkForFloatingDiscs(int[] coordinate) {
+    public void handleFloatingDiscs(int[] coordinate) {
 
         int col = coordinate[1];
-
 
         int prevFloatingRow = -1;
         if (col - 1 >= 0) {
@@ -142,7 +141,7 @@ public class GameLogic {
                 board.getBoard()[newR][newC] = "-";
             }
         }
-        checkForFloatingDiscs(coordinate);
+        handleFloatingDiscs(coordinate);
     }
 
 
@@ -170,7 +169,7 @@ public class GameLogic {
 
         if (!Arrays.equals(timeBombCoordinate, new int[]{-1, -1})) {
             timeBombExplode(timeBombCoordinate);
-            checkForFloatingDiscs(timeBombCoordinate);
+            handleFloatingDiscs(timeBombCoordinate);
             boolean player1Win = checkWinTimeBomb("X", timeBombCoordinate);
             boolean player2Win = checkWinTimeBomb("O", timeBombCoordinate);
 
@@ -263,8 +262,11 @@ public class GameLogic {
 
         }
 
+
+        
+
         if(bombPressed){
-            System.out.println(coordinate[1]);
+//            System.out.println(coordinate[1]);
             clearColumn(coordinate[1]);
         }
 

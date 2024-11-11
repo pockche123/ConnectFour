@@ -196,12 +196,8 @@ public class GameLogic {
     public int takeTurn( int player, GameState state){
 
         int[] coordinate = new int[]{-1,-1};
-        int[] timeBombCoordinate = new int[]{-1,-1};
         while(Arrays.equals(coordinate, new int[]{-1,-1})) {
-            int[][] coordinates = handleCoordinates(player);
-            coordinate = coordinates[0];
-            timeBombCoordinate = coordinates[1];
-
+            coordinate = handleCoordinates(player);
         }
         String disc = "X";
         if(player == 2){
@@ -212,9 +208,7 @@ public class GameLogic {
         if (playerWin) {
             return player;
         }
-
-        handleTimeBomb(timeBombCoordinate);
-
+        handleTimeBomb(state);
         if (state.timeBombCount == 0) {
             int winner = timeBombCountEqualsZeroWin(state.savedCoordinate);
             board.printBoard();
@@ -227,9 +221,9 @@ public class GameLogic {
 
     }
 
-    private int[][] handleCoordinates(int player){
+    private int[] handleCoordinates(int player){
         int[] coordinate = new int[] {-1,-1};
-        int[] timeBombCoordinate = new int[] {-1,-1};
+
         boolean bombPressed = false;
 
         System.out.printf("Player %d, please pick a suitable column: \n", player);
@@ -244,10 +238,10 @@ public class GameLogic {
                 if(input.equals("*")){
                     if(Arrays.equals(state.savedCoordinate, new int[]{-1,-1})) {
                         coordinate = pickCoordinates(stdin.nextLine(), "*");
-                        timeBombCoordinate = new int[]{coordinate[0], coordinate[1]};
+                        state.savedCoordinate = new int[]{coordinate[0], coordinate[1]};
                     } else{
                         System.err.println("Error: A new time bomb cannot be placed until the current one has detonated.");
-                        return new int[][]{{-1,-1}, {-1,-1}};
+                        return new int[]{-1,-1};
 
                     }
                 }
@@ -262,18 +256,14 @@ public class GameLogic {
 
         }
 
-
-        
-
         if(bombPressed){
-//            System.out.println(coordinate[1]);
             clearColumn(coordinate[1]);
         }
 
 
         System.out.printf("Player %d has picked the column %d. \n", player, coordinate[1]+1);
         board.printBoard();
-        return new int[][]{coordinate, timeBombCoordinate};
+        return coordinate;
 
     }
 
@@ -319,13 +309,13 @@ public class GameLogic {
 
 
 
-    private void handleTimeBomb(int[] timeBombCoordinate){
-        if (!(Arrays.equals(timeBombCoordinate, new int[]{-1, -1}))) {
-            state.timeBombActivated = true;
-
-            state.savedCoordinate = new int[]{timeBombCoordinate[0], timeBombCoordinate[1]};
-
-        }
+    private void handleTimeBomb(GameState state){
+//        if (!(Arrays.equals(state.savedCoordinate new int[]{-1, -1}))) {
+//            state.timeBombActivated = true;
+//
+//            state.savedCoordinate = new int[]{timeBombCoordinate[0], timeBombCoordinate[1]};
+//
+//        }
         if (state.timeBombActivated) {
             state.timeBombCount -= 1;
         }

@@ -223,18 +223,26 @@ public class GameLogic {
     }
 
     private int[] handleCoordinates(int player){
-        int[] coordinate = new int[] {-1,-1};
-
-        boolean bombPressed = false;
 
         System.out.printf("Player %d, please pick a suitable column: \n", player);
 
+        int[] coordinate = handleInput(player);
+        System.out.printf("Player %d has picked the column %d. \n", player, coordinate[1]+1);
+        board.printBoard();
+        return coordinate;
+
+    }
+
+    private int[] handleInput(int player){
+
+        int[] coordinate = new int[]{-1,-1};
+
         while(Arrays.equals(coordinate, new int[]{-1, -1})){
-           String input = stdin.nextLine();
+            String input = stdin.nextLine();
             if(input.equalsIgnoreCase("b") || input.equals("*")){
                 if(input.equalsIgnoreCase("b")) {
                     coordinate = pickCoordinates(stdin.nextLine(),  "-");
-                    bombPressed = true;
+                    clearColumn(coordinate[1]);
                 }
                 if(input.equals("*")){
                     if(Arrays.equals(state.savedCoordinate, new int[]{-1,-1})) {
@@ -244,7 +252,6 @@ public class GameLogic {
                     } else{
                         System.err.println("Error: A new time bomb cannot be placed until the current one has detonated.");
                         return new int[]{-1,-1};
-
                     }
                 }
 
@@ -258,14 +265,8 @@ public class GameLogic {
 
         }
 
-        if(bombPressed){
-            clearColumn(coordinate[1]);
-        }
-
-
-        System.out.printf("Player %d has picked the column %d. \n", player, coordinate[1]+1);
-        board.printBoard();
         return coordinate;
+
 
     }
 
@@ -312,12 +313,6 @@ public class GameLogic {
 
 
     private void handleTimeBomb(GameState state){
-//        if (!(Arrays.equals(state.savedCoordinate new int[]{-1, -1}))) {
-//            state.timeBombActivated = true;
-//
-//            state.savedCoordinate = new int[]{timeBombCoordinate[0], timeBombCoordinate[1]};
-//
-//        }
         if (state.timeBombActivated) {
             state.timeBombCount -= 1;
         }

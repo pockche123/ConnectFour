@@ -243,9 +243,12 @@ public class GameLogic {
                 if(input.equalsIgnoreCase("b")) {
                     if(!state.timeBombActivated) {
                         coordinate = pickCoordinates(stdin.nextLine(), "-");
-                        clearColumn(coordinate[1]);
+                        if(coordinate[1] != -1) {
+                            clearColumn(coordinate[1]);
+                        }
                     }else{
                         System.err.println("Error: Bomb cannot be detonated until the time bomb has detonated.");
+                        return new int[]{-1,-1};
                     }
                 }
                 if(input.equals("*")){

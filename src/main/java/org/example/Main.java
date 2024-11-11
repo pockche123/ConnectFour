@@ -18,34 +18,34 @@ public class Main {
         System.out.println();
         System.out.println("Welcome to the game of Connect Four. Please start the game with player 1 by picking a column.");
         System.out.println();
-        setUpGrid(grid);
-
-        GameState gameState = new GameState(false, 4, new int[]{-1, -1});
-
-        while(true){
-
-            int turn1 = playTurn(1, gameState);
-            if(turn1 != -1){
-                printOutcome(turn1);
-                break;
-            }
-
-            if(checkFullGrid(grid)){
-                System.out.println("Game over. Draw!");
-                break;
-            }
-            int turn2 = playTurn(2, gameState);
-            if(turn2 != -1){
-                printOutcome(turn2);
-                break;
-            }
-
-            if(checkFullGrid(grid)){
-                System.out.println("Game over. Draw!");
-                break;
-            }
-
-        }
+//        setUpGrid(grid);
+//
+//        GameState gameState = new GameState(false, 4, new int[]{-1, -1});
+//
+//        while(true){
+//
+//            int turn1 = playTurn(1, gameState);
+//            if(turn1 != -1){
+//                printOutcome(turn1);
+//                break;
+//            }
+//
+//            if(checkFullGrid(grid)){
+//                System.out.println("Game over. Draw!");
+//                break;
+//            }
+//            int turn2 = playTurn(2, gameState);
+//            if(turn2 != -1){
+//                printOutcome(turn2);
+//                break;
+//            }
+//
+//            if(checkFullGrid(grid)){
+//                System.out.println("Game over. Draw!");
+//                break;
+//            }
+//
+//        }
 
 
 

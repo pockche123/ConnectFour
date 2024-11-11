@@ -1,12 +1,13 @@
 package org.example;
 
 import java.util.Arrays;
-
+import java.util.Scanner;
 
 
 public class GameLogic {
     private GameBoard board;
     private GameState state;
+    private static Scanner stdin = new Scanner(System.in);
 
 
     public GameLogic(GameBoard board, GameState state) {
@@ -193,12 +194,12 @@ public class GameLogic {
         return -1;
     }
 
-    private int takeTurn(String input, int player, GameState state){
+    public int takeTurn( int player, GameState state){
 
         int[] coordinate = new int[]{-1,-1};
         int[] timeBombCoordinate = new int[]{-1,-1};
         while(Arrays.equals(coordinate, new int[]{-1,-1})) {
-            int[][] coordinates = handleCoordinates(input, player);
+            int[][] coordinates = handleCoordinates(player);
             coordinate = coordinates[0];
             timeBombCoordinate = coordinates[1];
 
@@ -227,15 +228,15 @@ public class GameLogic {
 
     }
 
-    private int[][] handleCoordinates(String input, int player){
+    private int[][] handleCoordinates(int player){
         int[] coordinate = new int[] {-1,-1};
         int[] timeBombCoordinate = new int[] {-1,-1};
         boolean bombPressed = false;
 
-
         System.out.printf("Player %d, please pick a suitable column: \n", player);
+
         while(Arrays.equals(coordinate, new int[]{-1, -1})){
-//            String input = stdin.nextLine();
+           String input = stdin.nextLine();
             if(input.equalsIgnoreCase("b") || input.equals("*")){
                 if(input.equalsIgnoreCase("b")) {
                     coordinate = pickCoordinates(input,  "-");
@@ -243,7 +244,7 @@ public class GameLogic {
                 }
                 if(input.equals("*")){
                     if(Arrays.equals(state.savedCoordinate, new int[]{-1,-1})) {
-                        coordinate = pickCoordinates(input, "*");
+                        coordinate = pickCoordinates(stdin.nextLine(), "*");
                         timeBombCoordinate = new int[]{coordinate[0], coordinate[1]};
                     } else{
                         System.err.println("Error: A new time bomb cannot be placed until the current one has detonated.");
@@ -336,7 +337,7 @@ public class GameLogic {
 
     }
 
-    private static void printOutcome(int player) {
+    public void printOutcome(int player) {
         if(player == 1){
             System.out.println("Game over. Player 1 is the winner!");
         }else if(player == 2){

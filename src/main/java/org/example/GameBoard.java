@@ -48,7 +48,7 @@ public class GameBoard {
 
     }
 
-    private boolean isFull(){
+    public boolean isFull(){
 
         for(int c=0; c<board[0].length; c++){
             if(board[1][c].equals("-")){

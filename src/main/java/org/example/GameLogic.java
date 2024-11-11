@@ -30,10 +30,7 @@ public class GameLogic {
                 break;
             }
         }
-
-
         return count;
-
     }
 
 
@@ -70,7 +67,6 @@ public class GameLogic {
         for (int r = 1; r < board.getBoard().length; r++) {
             board.getBoard()[r][column] = "-";
         }
-
 
     }
 

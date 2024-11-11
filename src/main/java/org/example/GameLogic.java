@@ -210,10 +210,12 @@ public class GameLogic {
         }
         handleTimeBomb(state);
         if (state.timeBombCount == 0) {
-            System.out.println(state.timeBombCount);
             int winner = timeBombCountEqualsZeroWin(state.savedCoordinate);
             board.printBoard();
-            resetTimer( );
+            resetTimer();
+            if(coordinate[1] != -1) {
+                System.out.printf("Player %d has picked the column %d. \n", player, coordinate[1] + 1);
+            }
             return winner;
 
         }
@@ -227,8 +229,10 @@ public class GameLogic {
         System.out.printf("Player %d, please pick a suitable column: \n", player);
 
         int[] coordinate = handleInput(player);
-        System.out.printf("Player %d has picked the column %d. \n", player, coordinate[1]+1);
         board.printBoard();
+        if(coordinate[1] != -1) {
+            System.out.printf("Player %d has picked the column %d. \n", player, coordinate[1] + 1);
+        }
         return coordinate;
 
     }
@@ -243,8 +247,8 @@ public class GameLogic {
                 if(input.equalsIgnoreCase("b")) {
                     if(!state.timeBombActivated) {
                         coordinate = pickCoordinates(stdin.nextLine(), "-");
-                        if(coordinate[1] != -1) {
-                            clearColumn(coordinate[1]);
+                        if(coordinate[1] != -1){
+                        clearColumn(coordinate[1]);
                         }
                     }else{
                         System.err.println("Error: Bomb cannot be detonated until the time bomb has detonated.");

@@ -84,7 +84,7 @@ To retract from pressing the bomb, after you have pressed a "b", you have to pre
 
 A time-bomb will clear the coordinates at which it was placed in and all of its neighbours in either direction (horizontally, vertically or diagnolly) after the opponent has made 2 moves. After the bomb clears, the discs at the top will fall down the column. Disc falling down and resulting in a connect four will make a winner. 
 
-![Time bomb](./images/timeBomb.png)
+![Time bomb](./images/timebomb.png)
 
 
 Simiar to clear-column bomb, to retract from pressing the time-bomb, after you have pressed a "*", you have to press "Enter" twice. 

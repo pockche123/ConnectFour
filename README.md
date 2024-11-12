@@ -10,10 +10,10 @@
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
-- [How to set up and run](#how-to-set-up-and-run)
-      -[Cloning the Repository](#cloning-the-repository)
-      -[Building the project](#building-the-project)
-      -[Running the application](#running-the-application)
+- [How to Set Up and Run](#how-to-set-up-and-run)
+  - [Cloning the Repository](#cloning-the-repository)
+  - [Building the Project](#building-the-project)
+  - [Running the Application](#running-the-application)
 - [Testing](#testing)
 - [Instructions](#instuctions)
 

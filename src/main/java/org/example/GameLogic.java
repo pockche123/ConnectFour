@@ -335,7 +335,7 @@ public class GameLogic {
 
     }
 
-    private void printOutcome(int player) {
+    public void printOutcome(int player) {
         if(player == 1){
             System.out.println("Game over. Player 1 is the winner!");
         }else if(player == 2){

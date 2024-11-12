@@ -74,6 +74,7 @@ public class GameBoard {
 
     }
 
+//  Finds the row index of a "floating disc" in the given column
     public  int findFloatingDiscRow(int col){
 
         int floatingRow = -1;

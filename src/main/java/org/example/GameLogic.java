@@ -15,6 +15,8 @@ public class GameLogic {
         this.state = state;
     }
 
+//    Counts consecutive discs in a direction starting from r to c.
+//    used to check if a connect 4 sequence is possible in the direction.
     public int checkUniDirectionalCount(int r, int c, int rowStep, int colStep, String disc) {
         int count = 0;
         int rowLength = board.getBoard().length;
@@ -33,7 +35,7 @@ public class GameLogic {
         return count;
     }
 
-
+//    Checks if connect 4 is possible with the lastCoordinates.
     public boolean checkConnect4(String disc, int[] lastCoordinates) {
         int r = lastCoordinates[0];
         int c = lastCoordinates[1];
@@ -102,7 +104,7 @@ public class GameLogic {
 
     }
 
-
+// Moves down any discs that are floating. Floating defined by any discs whose row+1 have "-" discs.
     public void moveDownFloatingDiscs(int floatingDiscRow, int emptyDiscRow, int col) {
 
         for (int r = emptyDiscRow; r > 0; r--) {
@@ -140,7 +142,7 @@ public class GameLogic {
         handleFloatingDiscs(coordinate);
     }
 
-
+//    Checks to see if there is a possibility of a connect 4 after a time bomb has detonated.
     public boolean checkWinTimeBomb(String disc, int[] bombCoordinates) {
 
         int r = bombCoordinates[0];
@@ -160,7 +162,7 @@ public class GameLogic {
 
     }
 
-
+//    Check to see the winner of the time bomb after the time bomb has detonated, represented by 0, 1, 2 or -1.
     public int timeBombCountEqualsZeroWin(int[] timeBombCoordinate) {
 
         if (!Arrays.equals(timeBombCoordinate, new int[]{-1, -1})) {
@@ -233,6 +235,8 @@ public class GameLogic {
 
     }
 
+
+//Handles user input to determine the coordinates for the player's move.
     private int[] handleInput(int player){
 
         int[] coordinate = new int[]{-1,-1};

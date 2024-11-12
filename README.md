@@ -62,7 +62,7 @@ To run the unit tests, use the following command:
 
 ## Instructions 
 
-The objective of the game is to place a disc (either X or O) in four in a row (either horizontally, vertically or diagnolly). The player can start the game by choosing a column which will then drop the disc at the bottom of the column.
+The objective of the game is to connect four discs (either X or O) in a row (horizontally, vertically, or diagonally). The player starts the game by selecting a column and pressing "Enter", which drops the disc to the lowest available row in that column.
 
 ![Winner](./images/winner.png)
 
@@ -70,8 +70,14 @@ However, there are additional features.
 
 ### Additional features 
 
-Additional features include clear-column bomb and a time-bomb. 
-A clear-columb bomb will clear an entire column. To place a clear-bomb, you simply press a "b", then press "Enter", then press the column you want to clear. 
+The game includes two additional features: a clear-column bomb and a time bomb.
+
+Clear-Column Bomb
+
+A clear-column bomb clears an entire column. To place a clear-column bomb:
+
+1. Press "b" and hit "Enter".
+2. Select the column you want to clear and hit "Enter".
  
 | Before Bomb | After Bomb |
 |-------------|------------|
@@ -79,18 +85,20 @@ A clear-columb bomb will clear an entire column. To place a clear-bomb, you simp
 
 
 
-To retract from pressing the bomb, after you have pressed a "b", you have to press "Enter" twice. 
+To cancel a bomb selection  after you have pressed a "b", you have to press "Enter" twice. 
 
-
-A time-bomb will clear the coordinates at which it was placed in and all of its neighbours in either direction (horizontally, vertically or diagnolly) after the opponent has made 2 moves. After the bomb clears, the discs at the top will fall down the column. Disc falling down and resulting in a connect four will make a winner. 
+A time bomb clears the cell where it is placed and all its neighboring cells (horizontally, vertically, or diagonally) after the opponent has made two moves. When the bomb clears, any discs above the cleared cells will fall down. If this results in a connect-four, it will declare a winner.
 
 ![Time bomb](./images/timebomb.png)
 
+To place a time bomb:
 
-Simiar to clear-column bomb, to retract from pressing the time-bomb, after you have pressed a "*", you have to press "Enter" twice. 
+1. Press "*" and hit "Enter".
+2. Select the column where you want to place the bomb.
 
-Either a clear-column bomb or a time-bomb can be placed at a time.
+To cancel a bomb selection after pressing "*", press "Enter" twice.
 
+Note: Only one bomb (either a clear-column bomb or a time bomb) can be placed at a time.
 
 
 

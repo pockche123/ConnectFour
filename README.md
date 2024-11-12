@@ -4,7 +4,7 @@
 
 ## Description 
 
-"Connect Four" is a two-player command-line application game where a player wins the game if they are able to connect four of their disks in a row in either (horizontal, vertical or diagnol) direction. It is built in Java using Maven for dependency management and project structure. 
+"Connect Four" is a command-line Java application. It is built in using Maven for dependency management and project structure. 
 
 
 ## Table of Contents
